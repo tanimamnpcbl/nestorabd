@@ -1,0 +1,388 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- PRODUCT DETAILS -->
+
+    <div class="row g-5">
+
+        <!-- PRODUCT IMAGE -->
+
+        <div class="col-md-5">
+
+            <div class="card border-0 shadow-sm">
+
+                {% if product.image %}
+
+                    <img
+                        src="{{ product.image.url }}"
+                        class="img-fluid rounded"
+                        alt="{{ product.name }}"
+                        style="width: 100%; height: 500px; object-fit: contain;"
+                    >
+
+                {% else %}
+
+                    <div
+                        class="bg-light d-flex align-items-center justify-content-center rounded"
+                        style="height: 500px;"
+                    >
+
+                        <div class="text-center text-muted">
+
+                            <div class="fs-1">
+                                📚
+                            </div>
+
+                            <div>
+                                No Image
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- PRODUCT INFORMATION -->
+
+        <div class="col-md-7">
+
+            <!-- Product Name -->
+
+            <h1 class="fw-bold mb-3">
+
+                {{ product.name }}
+
+            </h1>
+
+
+            <!-- Category -->
+
+            {% if product.category %}
+
+                <p class="mb-2">
+
+                    <strong>
+                        Category:
+                    </strong>
+
+                    <a
+                        href="{% url 'products' %}?category={{ product.category.slug }}"
+                        class="text-decoration-none"
+                    >
+
+                        {{ product.category.name }}
+
+                    </a>
+
+                </p>
+
+            {% endif %}
+
+
+            <!-- Author -->
+
+            {% if product.author %}
+
+                <p class="text-muted mb-2">
+
+                    <strong>
+                        Author:
+                    </strong>
+
+                    {{ product.author }}
+
+                </p>
+
+            {% endif %}
+
+
+            <!-- Brand -->
+
+            {% if product.brand %}
+
+                <p class="text-muted mb-2">
+
+                    <strong>
+                        Brand:
+                    </strong>
+
+                    {{ product.brand }}
+
+                </p>
+
+            {% endif %}
+
+
+            <!-- SKU -->
+
+            {% if product.sku %}
+
+                <p class="text-muted mb-3">
+
+                    <strong>
+                        SKU:
+                    </strong>
+
+                    {{ product.sku }}
+
+                </p>
+
+            {% endif %}
+
+
+            <!-- PRICE -->
+
+            <div class="my-4">
+
+                {% if product.sale_price %}
+
+                    <span class="fs-2 fw-bold text-success">
+
+                        ৳{{ product.sale_price }}
+
+                    </span>
+
+                    <del class="fs-5 text-muted ms-3">
+
+                        ৳{{ product.price }}
+
+                    </del>
+
+                {% else %}
+
+                    <span class="fs-2 fw-bold text-success">
+
+                        ৳{{ product.price }}
+
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="mb-4">
+
+                <h5 class="fw-bold mb-3">
+
+                    Description
+
+                </h5>
+
+                <div class="text-muted">
+
+                    {{ product.description|linebreaks }}
+
+                </div>
+
+            </div>
+
+
+            <!-- STOCK -->
+
+            <div class="mb-4">
+
+                <strong>
+                    Stock:
+                </strong>
+
+
+                {% if product.stock > 0 %}
+
+                    <span class="text-success fw-bold">
+
+                        {{ product.stock }} টি available
+
+                    </span>
+
+                {% else %}
+
+                    <span class="text-danger fw-bold">
+
+                        Out of Stock
+
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="d-flex flex-wrap gap-2">
+
+                {% if product.stock > 0 %}
+
+                    <a
+                        href="{% url 'cart_add' product.id %}"
+                        class="btn btn-success btn-lg px-4"
+                    >
+
+                        🛒 Add to Cart
+
+                    </a>
+
+                {% else %}
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary btn-lg px-4"
+                        disabled
+                    >
+
+                        Out of Stock
+
+                    </button>
+
+                {% endif %}
+
+
+                <a
+                    href="{% url 'products' %}"
+                    class="btn btn-outline-secondary btn-lg px-4"
+                >
+
+                    Continue Shopping
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- RELATED PRODUCTS -->
+
+    {% if related_products %}
+
+        <div class="mt-5 pt-5 border-top">
+
+            <h3 class="fw-bold mb-4">
+
+                Related Products
+
+            </h3>
+
+
+            <div class="row g-4">
+
+                {% for related in related_products %}
+
+                    <div class="col-6 col-md-4 col-lg-3">
+
+                        <div class="card h-100 border-0 shadow-sm">
+
+                            {% if related.image %}
+
+                                <img
+                                    src="{{ related.image.url }}"
+                                    class="card-img-top"
+                                    alt="{{ related.name }}"
+                                    style="height: 230px; object-fit: contain;"
+                                >
+
+                            {% else %}
+
+                                <div
+                                    class="bg-light d-flex align-items-center justify-content-center"
+                                    style="height: 230px;"
+                                >
+
+                                    <span class="text-muted">
+
+                                        No Image
+
+                                    </span>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <div class="card-body">
+
+                                <h6 class="fw-bold">
+
+                                    {{ related.name|truncatechars:45 }}
+
+                                </h6>
+
+
+                                {% if related.author %}
+
+                                    <small class="text-muted">
+
+                                        {{ related.author }}
+
+                                    </small>
+
+                                {% endif %}
+
+
+                                <div class="mt-2">
+
+                                    {% if related.sale_price %}
+
+                                        <span class="fw-bold text-success">
+
+                                            ৳{{ related.sale_price }}
+
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="fw-bold text-success">
+
+                                            ৳{{ related.price }}
+
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="card-footer bg-white border-0">
+
+                                <a
+                                    href="{% url 'product_detail' related.slug %}"
+                                    class="btn btn-outline-success btn-sm w-100"
+                                >
+
+                                    View Details
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

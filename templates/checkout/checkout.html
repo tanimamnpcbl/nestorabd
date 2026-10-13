@@ -1,0 +1,423 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h2 class="fw-bold mb-4">
+        Checkout
+    </h2>
+
+
+    <form
+        method="POST"
+        enctype="multipart/form-data"
+    >
+
+        {% csrf_token %}
+
+
+        <div class="row g-4">
+
+
+            <!-- CUSTOMER INFORMATION -->
+
+            <div class="col-lg-7">
+
+                <div class="card border-0 shadow-sm">
+
+                    <div class="card-body p-4">
+
+                        <h4 class="fw-bold mb-4">
+                            Delivery Information
+                        </h4>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                name="name"
+                                class="form-control"
+                                value="{{ user.first_name }}"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    Phone
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="phone"
+                                    class="form-control"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    Email
+                                </label>
+
+                                <input
+                                    type="email"
+                                    name="email"
+                                    class="form-control"
+                                    value="{{ user.email }}"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Country
+                            </label>
+
+                            <input
+                                type="text"
+                                name="country"
+                                value="Bangladesh"
+                                class="form-control"
+                            >
+
+                        </div>
+
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    District
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="district"
+                                    class="form-control"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    Thana / Upazila
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="thana"
+                                    class="form-control"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Full Address
+                            </label>
+
+                            <textarea
+                                name="address"
+                                class="form-control"
+                                rows="4"
+                                required
+                            ></textarea>
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Order Note
+                            </label>
+
+                            <textarea
+                                name="order_note"
+                                class="form-control"
+                                rows="3"
+                                placeholder="কোনো বিশেষ নির্দেশনা থাকলে লিখুন"
+                            ></textarea>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PAYMENT -->
+
+                <div class="card border-0 shadow-sm mt-4">
+
+                    <div class="card-body p-4">
+
+                        <h4 class="fw-bold mb-4">
+                            Payment Method
+                        </h4>
+
+
+                        <div class="mb-3">
+
+                            <div class="form-check">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="payment_method"
+                                    value="cod"
+                                    id="cod"
+                                    checked
+                                >
+
+                                <label
+                                    class="form-check-label"
+                                    for="cod"
+                                >
+                                    Cash on Delivery
+                                </label>
+
+                            </div>
+
+
+                            <div class="form-check">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="payment_method"
+                                    value="bkash"
+                                    id="bkash"
+                                >
+
+                                <label
+                                    class="form-check-label"
+                                    for="bkash"
+                                >
+                                    bKash
+                                </label>
+
+                            </div>
+
+
+                            <div class="form-check">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="payment_method"
+                                    value="nagad"
+                                    id="nagad"
+                                >
+
+                                <label
+                                    class="form-check-label"
+                                    for="nagad"
+                                >
+                                    Nagad
+                                </label>
+
+                            </div>
+
+
+                            <div class="form-check">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="payment_method"
+                                    value="rocket"
+                                    id="rocket"
+                                >
+
+                                <label
+                                    class="form-check-label"
+                                    for="rocket"
+                                >
+                                    Rocket
+                                </label>
+
+                            </div>
+
+
+                            <div class="form-check">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="payment_method"
+                                    value="upay"
+                                    id="upay"
+                                >
+
+                                <label
+                                    class="form-check-label"
+                                    for="upay"
+                                >
+                                    Upay
+                                </label>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Sender Payment Number
+                            </label>
+
+                            <input
+                                type="text"
+                                name="payment_number"
+                                class="form-control"
+                                placeholder="01XXXXXXXXX"
+                            >
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Transaction ID
+                            </label>
+
+                            <input
+                                type="text"
+                                name="transaction_id"
+                                class="form-control"
+                            >
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Payment Screenshot
+                            </label>
+
+                            <input
+                                type="file"
+                                name="payment_screenshot"
+                                class="form-control"
+                                accept="image/*"
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ORDER SUMMARY -->
+
+            <div class="col-lg-5">
+
+                <div class="card border-0 shadow-sm">
+
+                    <div class="card-body p-4">
+
+                        <h4 class="fw-bold mb-4">
+                            Your Order
+                        </h4>
+
+
+                        {% for item in items %}
+
+                            <div class="d-flex justify-content-between mb-3">
+
+                                <div>
+
+                                    <strong>
+                                        {{ item.product.name }}
+                                    </strong>
+
+                                    <br>
+
+                                    <small class="text-muted">
+                                        Qty: {{ item.quantity }}
+                                    </small>
+
+                                </div>
+
+
+                                <span>
+                                    ৳{{ item.subtotal }}
+                                </span>
+
+                            </div>
+
+                        {% endfor %}
+
+
+                        <hr>
+
+
+                        <div class="d-flex justify-content-between">
+
+                            <strong>
+                                Total
+                            </strong>
+
+                            <strong class="text-success fs-4">
+                                ৳{{ total }}
+                            </strong>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-success w-100 btn-lg mt-4"
+                        >
+                            Place Order
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

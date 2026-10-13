@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+
+{% block title %}অর্ডার সফল | Nestora BD{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="text-center">
+
+        <!-- Success Icon -->
+        <div class="mb-4">
+            <div
+                class="d-inline-flex align-items-center justify-content-center rounded-circle bg-success bg-opacity-10"
+                style="width: 110px; height: 110px;"
+            >
+                <i class="fa fa-check-circle text-success"
+                   style="font-size: 70px;"></i>
+            </div>
+        </div>
+
+        <!-- Success Message -->
+        <h1 class="fw-bold text-success mb-3">
+            অর্ডার সফল হয়েছে!
+        </h1>
+
+        <p class="text-muted fs-5 mb-4">
+            আপনার অর্ডারটি সফলভাবে গ্রহণ করা হয়েছে।
+        </p>
+
+        <!-- Order Card -->
+        <div class="card border-0 shadow-sm mx-auto mb-4"
+             style="max-width: 600px;">
+
+            <div class="card-body p-4">
+
+                <div class="mb-4">
+                    <small class="text-muted d-block mb-1">
+                        Order Number
+                    </small>
+
+                    <h3 class="fw-bold text-success mb-0">
+                        {{ order.order_number }}
+                    </h3>
+                </div>
+
+                <hr>
+
+                <div class="row text-start g-3">
+
+                    <div class="col-md-6">
+                        <small class="text-muted">
+                            Customer Name
+                        </small>
+
+                        <div class="fw-semibold">
+                            {{ order.name }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <small class="text-muted">
+                            Phone
+                        </small>
+
+                        <div class="fw-semibold">
+                            {{ order.phone }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <small class="text-muted">
+                            Payment Method
+                        </small>
+
+                        <div class="fw-semibold">
+                            {{ order.get_payment_method_display }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <small class="text-muted">
+                            Payment Status
+                        </small>
+
+                        <div>
+                            <span class="badge bg-warning text-dark">
+                                {{ order.get_payment_status_display }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <small class="text-muted">
+                            Delivery Address
+                        </small>
+
+                        <div class="fw-semibold">
+                            {{ order.address }},
+                            {{ order.thana }},
+                            {{ order.district }}
+                        </div>
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <!-- Total -->
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="fw-semibold">
+                        মোট অর্ডার মূল্য
+                    </span>
+
+                    <span class="fs-3 fw-bold text-success">
+                        ৳{{ order.total }}
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Order Items -->
+        <div class="card border-0 shadow-sm mx-auto mb-4"
+             style="max-width: 600px;">
+
+            <div class="card-body p-4 text-start">
+
+                <h5 class="fw-bold mb-3">
+                    <i class="fa fa-shopping-bag text-success me-2"></i>
+                    অর্ডারের পণ্য
+                </h5>
+
+                {% for item in order.items.all %}
+
+                <div class="d-flex justify-content-between align-items-center border-bottom py-3">
+
+                    <div>
+                        <div class="fw-semibold">
+                            {{ item.product_name }}
+                        </div>
+
+                        <small class="text-muted">
+                            {{ item.quantity }} × ৳{{ item.price }}
+                        </small>
+                    </div>
+
+                    <div class="fw-bold">
+                        ৳{{ item.subtotal }}
+                    </div>
+
+                </div>
+
+                {% empty %}
+
+                <p class="text-muted mb-0">
+                    কোনো পণ্য পাওয়া যায়নি।
+                </p>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        <!-- Buttons -->
+        <div class="mt-4">
+
+            <a href="{% url 'home' %}"
+               class="btn btn-success btn-lg me-2 mb-2">
+
+                <i class="fa fa-home me-1"></i>
+                হোমে যান
+
+            </a>
+
+            <a href="{% url 'products' %}"
+               class="btn btn-outline-success btn-lg mb-2">
+
+                <i class="fa fa-shopping-bag me-1"></i>
+                আরও কেনাকাটা করুন
+
+            </a>
+
+        </div>
+
+        <p class="text-muted mt-4">
+            ধন্যবাদ Nestora BD-এর সাথে কেনাকাটা করার জন্য ❤️
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

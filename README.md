@@ -2,55 +2,34 @@
 
 Nestora is a Django-powered online bookstore for browsing books, managing a session-based cart, placing orders, and tracking order history.
 
-## Features
-
-- Browse active products and categories, with search by name, author, brand, or SKU.
-- Filter products by category and view related products.
-- Maintain a session-based cart with stock checks.
-- Register, log in, log out, and view authenticated order history.
-- Place orders with Bangladesh-focused delivery fields and Cash on Delivery, bKash, Nagad, Rocket, or Upay payment options.
-- Store payment metadata and optional payment screenshots.
-- Manage store data through Django admin.
-
-## Technology
-
-- Python 3.8+
-- Django 4.2
-- SQLite for local development
-- Pillow for image uploads
-- Bootstrap-based templates with custom CSS in `static/css/`
-
-## Project layout
-
-```text
-manage.py             Django management entry point
-nestora/              Project settings and URL configuration
-store/                Store models, views, forms, admin, and migrations
-templates/            HTML templates
-static/               Static assets
-media/                Local user-uploaded images
-db.sqlite3            Local development database
-```
-
-## Local setup
+## Local setup (PowerShell)
 
 ```powershell
 python -m venv .venv
-.\\.venv\\Scripts\\Activate.ps1
-python -m pip install "Django>=4.2,<5" Pillow
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+$env:DEBUG = "True"
+$env:SECRET_KEY = "local-development-key-change-me"
 python manage.py migrate
 python manage.py runserver
 ```
 
-Open <http://127.0.0.1:8000/>. Create an administrator with `python manage.py createsuperuser` to manage products, categories, and orders at `/admin/`.
+Open <http://127.0.0.1:8000/>. Create an administrator with `python manage.py createsuperuser`.
 
-## Configuration
+## Appliku deployment
 
-The checked-in settings target local development: `DEBUG` is enabled, SQLite is used, and media files are served by Django in debug mode. Before deployment, move the secret key and database settings to environment variables, set `DEBUG=False`, configure `ALLOWED_HOSTS`, and run `python manage.py collectstatic`.
+This repository is prepared for Appliku's Python build image:
 
-## Testing
+1. Push this project to GitHub and connect the `main` branch in Appliku.
+2. Select a supported Python build image (Python 3.12 or newer) and configure the app to use this repository root.
+3. Add processes: `web` → `bash run.sh`; `release` → `bash release.sh`.
+4. Create a PostgreSQL database in Appliku and make its connection URL available as `DATABASE_URL`.
+5. Set environment variables in Appliku before deploying:
+   - `SECRET_KEY`: generate locally with `python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`
+   - `DEBUG`: `False`
+   - `ALLOWED_HOSTS`: the actual Appliku hostname, comma-separated with any custom domains
+   - `DATABASE_URL`: the PostgreSQL URL supplied by Appliku
+6. Deploy and check build and release logs. Appliku's Python build image runs `collectstatic` when it detects `manage.py`; WhiteNoise serves the collected static files.
+7. Configure a persistent volume mounted at `/app/media` (or set `MEDIA_ROOT` to the chosen mount path) for uploaded product and payment images. Existing local SQLite data and uploaded files are not transferred automatically.
 
-```powershell
-python manage.py test
-```
-# nestorabd
+Do not commit `.env`, production secrets, database credentials, or database backups. `.env.example` contains only local-development guidance. The Appliku dashboard controls server, domain, HTTPS, database, persistent volume, and deployment configuration; those account-specific steps cannot be completed from this repository.

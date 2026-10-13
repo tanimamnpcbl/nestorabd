@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold">
+                Products
+            </h2>
+
+            {% if q %}
+                <p class="text-muted">
+                    Search result for: <strong>{{ q }}</strong>
+                </p>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    {% if products %}
+
+        <div class="row g-4">
+
+            {% for product in products %}
+
+                <div class="col-6 col-md-4 col-lg-3">
+
+                    <div class="card h-100 border-0 shadow-sm">
+
+                        {% if product.image %}
+
+                            <img
+                                src="{{ product.image.url }}"
+                                class="card-img-top"
+                                style="
+                                    height:250px;
+                                    object-fit:cover;
+                                "
+                                alt="{{ product.name }}"
+                            >
+
+                        {% else %}
+
+                            <div
+                                class="bg-light d-flex align-items-center justify-content-center"
+                                style="height:250px;"
+                            >
+
+                                <span class="text-muted">
+                                    No Image
+                                </span>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <div class="card-body">
+
+                            <h5 class="card-title">
+                                {{ product.name }}
+                            </h5>
+
+
+                            {% if product.author %}
+
+                                <p class="text-muted small mb-2">
+                                    {{ product.author }}
+                                </p>
+
+                            {% endif %}
+
+
+                            <div class="mb-3">
+
+                                {% if product.sale_price %}
+
+                                    <span class="fw-bold text-success">
+                                        ৳{{ product.sale_price }}
+                                    </span>
+
+                                    <del class="text-muted ms-2">
+                                        ৳{{ product.price }}
+                                    </del>
+
+                                {% else %}
+
+                                    <span class="fw-bold text-success">
+                                        ৳{{ product.price }}
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="d-grid gap-2">
+
+                                <a
+                                    href="{% url 'product_detail' product.slug %}"
+                                    class="btn btn-outline-success"
+                                >
+                                    View Details
+                                </a>
+
+
+                                {% if product.stock > 0 %}
+
+                                    <a
+                                        href="{% url 'cart_add' product.id %}"
+                                        class="btn btn-success"
+                                    >
+                                        Add to Cart
+                                    </a>
+
+                                {% else %}
+
+                                    <button
+                                        class="btn btn-secondary"
+                                        disabled
+                                    >
+                                        Out of Stock
+                                    </button>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="text-center py-5">
+
+            <h4>
+                No products found
+            </h4>
+
+            <p class="text-muted">
+                বর্তমানে কোনো product পাওয়া যায়নি।
+            </p>
+
+            <a
+                href="{% url 'products' %}"
+                class="btn btn-success"
+            >
+                View All Products
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

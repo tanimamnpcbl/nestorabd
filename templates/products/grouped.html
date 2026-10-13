@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block title %}Products by Category | Nestora BD{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    {% for category in categories %}
+
+        <section class="category-product-section mb-5">
+
+            <div class="category-section-heading mb-4">
+                <span></span>
+                <h2 class="fw-bold text-success mb-0">
+                    {{ category.name }}
+                </h2>
+                <span></span>
+            </div>
+
+            {% if category.active_products %}
+
+                <div class="category-product-grid">
+
+                    {% for product in category.active_products %}
+
+                        <article class="card h-100 border-0 shadow-sm overflow-hidden">
+
+                            <a href="{% url 'product_detail' product.slug %}">
+
+                                {% if product.image %}
+                                    <img
+                                        src="{{ product.image.url }}"
+                                        class="card-img-top"
+                                        alt="{{ product.name }}"
+                                    >
+                                {% else %}
+                                    <div class="bg-light d-flex align-items-center justify-content-center ratio ratio-1x1">
+                                        <span class="text-muted">No Image</span>
+                                    </div>
+                                {% endif %}
+
+                            </a>
+
+                            <div class="card-body d-flex flex-column">
+
+                                <small class="text-muted mb-1">
+                                    {{ category.name }}
+                                </small>
+
+                                <h5 class="card-title">
+                                    <a
+                                        href="{% url 'product_detail' product.slug %}"
+                                        class="text-decoration-none text-dark"
+                                    >
+                                        {{ product.name }}
+                                    </a>
+                                </h5>
+
+                                {% if product.author %}
+                                    <p class="text-muted small mb-2">
+                                        {{ product.author }}
+                                    </p>
+                                {% endif %}
+
+                                <div class="mb-3">
+                                    {% if product.sale_price %}
+                                        <span class="fw-bold text-success">
+                                            ৳{{ product.sale_price }}
+                                        </span>
+                                        <del class="text-muted ms-2">
+                                            ৳{{ product.price }}
+                                        </del>
+                                    {% else %}
+                                        <span class="fw-bold text-success">
+                                            ৳{{ product.price }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+
+                                <div class="d-grid gap-2 mt-auto">
+                                    <a
+                                        href="{% url 'product_detail' product.slug %}"
+                                        class="btn btn-outline-success"
+                                    >
+                                        View Details
+                                    </a>
+
+                                    {% if product.stock > 0 %}
+                                        <a
+                                            href="{% url 'cart_add' product.id %}"
+                                            class="btn btn-success"
+                                        >
+                                            Add to Cart
+                                        </a>
+                                    {% else %}
+                                        <button class="btn btn-secondary" disabled>
+                                            Out of Stock
+                                        </button>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+                <div class="text-center mt-4">
+                    <a
+                        href="{% url 'products' %}?category={{ category.slug }}"
+                        class="btn btn-outline-success"
+                    >
+                        {{ category.name }}-এর সব পণ্য দেখুন
+                    </a>
+                </div>
+
+            {% else %}
+
+                <p class="text-center text-muted py-4">
+                    এই ক্যাটাগরিতে এখনো কোনো পণ্য নেই।
+                </p>
+
+            {% endif %}
+
+        </section>
+
+    {% empty %}
+
+        <div class="text-center py-5">
+            <h4>কোনো ক্যাটাগরি পাওয়া যায়নি</h4>
+            <p class="text-muted">Admin panel থেকে category ও product যোগ করুন।</p>
+        </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,650 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block title %}
+
+Nestora BD | অনলাইন মার্কেটপ্লেস
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<!-- ==========================================
+     HERO SECTION
+=========================================== -->
+
+<section class="py-5 bg-light">
+
+    <div class="container">
+
+        <div class="row align-items-center g-4">
+
+
+            <!-- Left -->
+
+            <div class="col-lg-6">
+
+                <span class="badge bg-success mb-3">
+
+                    🛍️ Nestora BD
+
+                </span>
+
+
+                <h1 class="display-5 fw-bold">
+
+                    আপনার প্রয়োজনীয় সবকিছু
+                    <span class="text-success">
+                        এক জায়গায়
+                    </span>
+
+                </h1>
+
+
+                <p class="lead text-muted mt-3">
+
+                    বই, শিক্ষা, ইসলামিক পণ্য,
+                    লাইফস্টাইল, গিফট, স্টেশনারি
+                    এবং দৈনন্দিন প্রয়োজনীয় পণ্য
+                    এখন সহজেই অর্ডার করুন।
+
+                </p>
+
+
+                <div class="mt-4">
+
+                    <a
+                        href="{% url 'products' %}"
+                        class="btn btn-success btn-lg px-4 me-2"
+                    >
+
+                        <i class="fa fa-shopping-bag"></i>
+
+                        এখনই শপ করুন
+
+                    </a>
+
+
+                    <a
+                        href="{% url 'products' %}"
+                        class="btn btn-outline-dark btn-lg px-4"
+                    >
+
+                        পণ্য দেখুন
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Right -->
+
+            <div class="col-lg-6">
+
+                <div
+                    class="bg-white rounded-4 shadow-sm p-5 text-center"
+                >
+
+                    <div style="font-size:100px;">
+
+                        🛍️
+
+                    </div>
+
+                    <h3 class="fw-bold">
+
+                        Nestora BD
+
+                    </h3>
+
+                    <p class="text-muted mb-0">
+
+                        Shop Smart · Live Better
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     FEATURES
+=========================================== -->
+
+<section class="py-4 bg-white">
+
+    <div class="container">
+
+        <div class="row g-3">
+
+
+            <div class="col-md-3">
+
+                <div class="text-center p-3">
+
+                    <i
+                        class="fa fa-truck-fast fa-2x text-success"
+                    ></i>
+
+                    <h6 class="mt-2">
+                        দ্রুত ডেলিভারি
+                    </h6>
+
+                    <small class="text-muted">
+                        নির্ভরযোগ্য ডেলিভারি সার্ভিস
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <div class="text-center p-3">
+
+                    <i
+                        class="fa fa-shield-halved fa-2x text-success"
+                    ></i>
+
+                    <h6 class="mt-2">
+                        নিরাপদ কেনাকাটা
+                    </h6>
+
+                    <small class="text-muted">
+                        Secure Checkout
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <div class="text-center p-3">
+
+                    <i
+                        class="fa fa-money-bill-wave fa-2x text-success"
+                    ></i>
+
+                    <h6 class="mt-2">
+                        Cash on Delivery
+                    </h6>
+
+                    <small class="text-muted">
+                        পণ্য হাতে পেয়ে পেমেন্ট
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <div class="text-center p-3">
+
+                    <i
+                        class="fa fa-headset fa-2x text-success"
+                    ></i>
+
+                    <h6 class="mt-2">
+                        Customer Support
+                    </h6>
+
+                    <small class="text-muted">
+                        প্রয়োজন হলে যোগাযোগ করুন
+                    </small>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     CATEGORIES
+=========================================== -->
+
+<section class="py-5">
+
+    <div class="container">
+
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+                <h2 class="fw-bold mb-1">
+
+                    জনপ্রিয় ক্যাটাগরি
+
+                </h2>
+
+                <p class="text-muted mb-0">
+
+                    আপনার প্রয়োজন অনুযায়ী পণ্য খুঁজে নিন
+
+                </p>
+
+            </div>
+
+
+            <a
+                href="{% url 'products' %}"
+                class="btn btn-outline-success"
+            >
+
+                সব পণ্য
+
+            </a>
+
+        </div>
+
+
+
+        <div class="row g-4">
+
+
+            {% for category in categories %}
+
+            <div class="col-6 col-md-4 col-lg-3">
+
+                <a
+                    href="{% url 'products' %}?category={{ category.slug }}"
+                    class="text-decoration-none"
+                >
+
+                    <div class="card border-0 shadow-sm h-100">
+
+                        {% if category.image %}
+
+                            <img
+                                src="{{ category.image.url }}"
+                                class="card-img-top"
+                                style="height:180px; object-fit:cover;"
+                            >
+
+                        {% else %}
+
+                            <div
+                                class="d-flex align-items-center justify-content-center bg-light"
+                                style="height:180px;"
+                            >
+
+                                <i
+                                    class="fa fa-layer-group fa-3x text-success"
+                                ></i>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <div class="card-body text-center">
+
+                            <h5 class="fw-semibold">
+
+                                {{ category.name }}
+
+                            </h5>
+
+
+                            {% if category.description %}
+
+                                <p class="text-muted small mb-0">
+
+                                    {{ category.description|truncatechars:60 }}
+
+                                </p>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+            {% empty %}
+
+            <div class="col-12">
+
+                <div class="alert alert-info">
+
+                    এখনো কোনো category যোগ করা হয়নি।
+
+                    <br>
+
+                    Admin panel থেকে category যোগ করুন।
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     PRODUCTS BY CATEGORY
+=========================================== -->
+
+<section class="py-5 bg-light">
+
+    <div class="container">
+
+        {% for category in categories %}
+
+            {% if category.active_products %}
+
+                <div class="category-product-section mb-5">
+
+                    <div class="category-section-heading mb-4">
+
+                        <span></span>
+
+                        <h2 class="fw-bold text-success mb-0">
+                            {{ category.name }}
+                        </h2>
+
+                        <span></span>
+
+                    </div>
+
+                    <div class="row g-4">
+
+                        {% for product in category.active_products %}
+
+            <div class="col-6 col-md-4 col-lg-3">
+
+
+                <div class="card border-0 shadow-sm h-100">
+
+
+                    <!-- Product Image -->
+
+                    <a
+                        href="{% url 'product_detail' product.slug %}"
+                    >
+
+                        {% if product.image %}
+
+                            <img
+                                src="{{ product.image.url }}"
+                                class="card-img-top"
+                                alt="{{ product.name }}"
+                                style="
+                                    height:240px;
+                                    object-fit:cover;
+                                "
+                            >
+
+                        {% else %}
+
+                            <div
+                                class="bg-light d-flex align-items-center justify-content-center"
+                                style="height:240px;"
+                            >
+
+                                <i
+                                    class="fa fa-image fa-3x text-muted"
+                                ></i>
+
+                            </div>
+
+                        {% endif %}
+
+                    </a>
+
+
+
+                    <div class="card-body">
+
+
+                        <!-- Category -->
+
+                        <small class="text-success">
+
+                            {{ product.category.name }}
+
+                        </small>
+
+
+                        <!-- Product Name -->
+
+                        <h5 class="mt-1">
+
+                            <a
+                                href="{% url 'product_detail' product.slug %}"
+                                class="text-decoration-none text-dark"
+                            >
+
+                                {{ product.name|truncatechars:45 }}
+
+                            </a>
+
+                        </h5>
+
+
+                        <!-- Author -->
+
+                        {% if product.author %}
+
+                            <p class="text-muted small mb-2">
+
+                                {{ product.author }}
+
+                            </p>
+
+                        {% endif %}
+
+
+
+                        <!-- Price -->
+
+                        <div class="mb-3">
+
+
+                            {% if product.sale_price %}
+
+                                <span class="text-muted text-decoration-line-through">
+
+                                    ৳{{ product.price }}
+
+                                </span>
+
+                                <strong class="text-success fs-5 ms-2">
+
+                                    ৳{{ product.sale_price }}
+
+                                </strong>
+
+                            {% else %}
+
+                                <strong class="text-success fs-5">
+
+                                    ৳{{ product.price }}
+
+                                </strong>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+
+                        <!-- Buttons -->
+
+                        <div class="d-flex gap-2">
+
+
+                            <a
+                                href="{% url 'product_detail' product.slug %}"
+                                class="btn btn-outline-success btn-sm flex-grow-1"
+                            >
+
+                                বিস্তারিত
+
+                            </a>
+
+
+                            {% if product.stock > 0 %}
+
+                                <a
+                                    href="{% url 'cart_add' product.id %}"
+                                    class="btn btn-success btn-sm"
+                                    title="Add to Cart"
+                                >
+
+                                    <i class="fa fa-cart-plus"></i>
+
+                                </a>
+
+                            {% else %}
+
+                                <button
+                                    class="btn btn-secondary btn-sm"
+                                    disabled
+                                >
+
+                                    Out
+
+                                </button>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+                        {% endfor %}
+
+                    </div>
+
+                    <div class="text-center mt-4">
+
+                        <a
+                            href="{% url 'products' %}?category={{ category.slug }}"
+                            class="btn btn-outline-success"
+                        >
+                            {{ category.name }}-এর সব পণ্য দেখুন
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        {% empty %}
+
+            <div class="text-center py-5">
+
+                <i class="fa fa-box-open fa-4x text-muted mb-3"></i>
+
+                <h4>এখনো কোনো পণ্য নেই</h4>
+
+                <p class="text-muted">
+                    Django Admin থেকে category ও product যোগ করুন।
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     CTA
+=========================================== -->
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div
+            class="bg-success text-white rounded-4 p-5 text-center"
+        >
+
+            <h2 class="fw-bold">
+
+                আপনার পছন্দের পণ্য খুঁজছেন?
+
+            </h2>
+
+
+            <p class="mb-4">
+
+                Nestora BD-তে বিভিন্ন ধরনের পণ্য
+                সহজে খুঁজে অর্ডার করুন।
+
+            </p>
+
+
+            <a
+                href="{% url 'products' %}"
+                class="btn btn-light btn-lg px-4"
+            >
+
+                <i class="fa fa-shopping-bag"></i>
+
+                এখনই কেনাকাটা করুন
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+{% endblock %}

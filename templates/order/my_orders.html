@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h2 class="fw-bold mb-4">
+        My Orders
+    </h2>
+
+
+    {% if orders %}
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered align-middle">
+
+                <thead>
+
+                    <tr>
+                        <th>Order</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Payment</th>
+                        <th></th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for order in orders %}
+
+                        <tr>
+
+                            <td>
+                                <strong>
+                                    {{ order.order_number }}
+                                </strong>
+                            </td>
+
+
+                            <td>
+                                {{ order.created_at|date:"d M Y, h:i A" }}
+                            </td>
+
+
+                            <td>
+                                ৳{{ order.total }}
+                            </td>
+
+
+                            <td>
+                                {{ order.get_status_display }}
+                            </td>
+
+
+                            <td>
+                                {{ order.get_payment_status_display }}
+                            </td>
+
+
+                            <td>
+
+                                <a
+                                    href="{% url 'order_detail' order.order_number %}"
+                                    class="btn btn-sm btn-success"
+                                >
+                                    View
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    {% else %}
+
+        <div class="text-center py-5">
+
+            <h4>
+                No orders yet
+            </h4>
+
+            <a
+                href="{% url 'products' %}"
+                class="btn btn-success mt-3"
+            >
+                Start Shopping
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

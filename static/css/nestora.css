@@ -1,0 +1,112 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+
+    font-family:
+        'Hind Siliguri',
+        sans-serif;
+
+    background: #f8fafc;
+
+    color: #1e293b;
+}
+
+.navbar-brand {
+    font-size: 24px;
+}
+
+.brand-mark {
+    display: inline-flex;
+
+    width: 36px;
+    height: 36px;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #198754;
+
+    color: white;
+
+    border-radius: 10px;
+
+    margin-right: 5px;
+}
+
+.card {
+    border: 0;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 4px 20px
+        rgba(0,0,0,.06);
+}
+
+.footer {
+    background: #0f172a;
+
+    color: white;
+}
+
+.footer h3 {
+    font-weight: 700;
+}
+
+.footer span {
+    color: #22c55e;
+}
+
+.category-section-heading {
+    display: grid;
+    grid-template-columns: minmax(40px, 1fr) auto minmax(40px, 1fr);
+    gap: 18px;
+    align-items: center;
+    text-align: center;
+}
+
+.category-section-heading span {
+    height: 1px;
+    background: #cfe8d7;
+}
+
+.category-section-heading h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.category-product-section:last-child {
+    margin-bottom: 0 !important;
+}
+
+.category-product-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.category-product-grid .card-img-top {
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+@media (max-width: 1199.98px) {
+    .category-product-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 991.98px) {
+    .category-product-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767.98px) {
+    .category-product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+}
